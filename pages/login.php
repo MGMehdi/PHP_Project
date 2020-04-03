@@ -15,8 +15,6 @@ if (isset($_POST['submit'])) {
         $_SESSION['id'] = $user->getId();
         $_SESSION['name'] = $user->getName();
         $_SESSION['surname'] = $user->getSurname();
-        $_SESSION['mail'] = $user->getMail();
-        $_SESSION['admin'] = $user->getAdmin();
         $_SESSION['seller'] = $user->getSeller();
         header('Location: profil.php');
     }

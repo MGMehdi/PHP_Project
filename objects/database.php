@@ -44,7 +44,42 @@ class Database
         }
     }
 
+    public function GetUser($id)
+    {
+        $sql = $this->db->prepare('SELECT * FROM `users` WHERE `id`=?');
+        $sql->execute(array($id));
+
+        while ($row = $sql->fetch()) {
+            print_r($row);
+            return $user = new User($row['id'], $row['name'], $row['surname'], $row['mail'], $row['password'], $row['isadmin'], $row['isseller']);
+        }
+
+    }
+
+    public function DeleteUser($id)
+    {
+        $sql = $this->db->prepare('DELETE FROM `users` WHERE `id`=?');
+        $sql->execute(array($id));
+        return true;
+    }
+
+    public function updatePassword($user)
+    {
+        print_r($user);
+
+        $sql = $this->db->prepare('UPDATE `users` SET `password`=? WHERE id=?');
+        $sql->execute(array($user->getPassword(), $user->getId()));
+        return true;
+    }
+
     public function updateUser($user)
+    {
+        $sql = $this->db->prepare('UPDATE `users` SET `name`=?, surname=?, mail=? WHERE id=?');
+        $sql->execute(array($user->getName(), $user->getSurname(), $user->getMail(), $user->getId()));
+        return true;
+    }
+
+    public function beASeller($user)
     {
         $sql = $this->db->prepare('UPDATE `users` SET `isseller`=1 WHERE id=?');
         $sql->execute(array($user->getId()));
@@ -72,7 +107,7 @@ class Database
         $sql->execute(array($id));
         while ($row = $sql->fetch()) {
             $city = new City($row['city'], $row['province']);
-            $city->setId($row['id']);
+            $city->setId($id);
         }
         return $city;
     }
@@ -82,21 +117,56 @@ class Database
     public function GetMyEntreprises($id)
     {
         $entreprises = array();
-        $sql = $this->db->prepare('SELECT * FROM `entreprises` WHERE id=?');
+        $sql = $this->db->prepare('SELECT * FROM `entreprises` WHERE `owner`=?');
         $sql->execute(array($id));
-        print_r($sql->errorInfo());
+
 
         while ($row = $sql->fetch()) {
             $entreprise = new Entreprise($row['owner'], $row['name'], $row['address'], $row['city'], $row['products'], $row['phone']);
+            $entreprise->setId($row['id']);
             array_push($entreprises, $entreprise);
         }
         return $entreprises;
     }
 
+    public function GetMyEntreprise($id)
+    {
+        $sql = $this->db->prepare('SELECT * FROM `entreprises` WHERE `id`=?');
+        $sql->execute(array($id));
+        while ($row = $sql->fetch()) {
+            $entreprise = new Entreprise($row['owner'], $row['name'], $row['address'], $row['city'], $row['products'], $row['phone']);
+        }
+        $entreprise->setId($id);
+        return $entreprise;
+    }
+
+
     public function AddEntreprises($entreprise)
     {
         $sql = $this->db->prepare('INSERT INTO `entreprises`(`owner`, `name`, `address`, `city`, `products`, `phone`) VALUES (?, ?, ?, ?, ?, ?)');
         $sql->execute(array($entreprise->getOwner(), $entreprise->getName(), $entreprise->getAddress(), $entreprise->getCity(), $entreprise->getProduct(), $entreprise->getPhone()));
+        return true;
+    }
+
+    public function UpdateEntreprises($entreprise)
+    {
+        error_log(print($entreprise->getId()));
+        $sql = $this->db->prepare('UPDATE `entreprises` SET `owner`=?, `name`=?, `address`=?, `city`=?, `products`=?, `phone`=? WHERE `id`=?');
+        $sql->execute(array($entreprise->getOwner(), $entreprise->getName(), $entreprise->getAddress(), $entreprise->getCity(), $entreprise->getProduct(), $entreprise->getPhone(), $entreprise->getId()));
+        return true;
+    }
+
+    public function DeleteAllEntrepris($id)
+    {
+        $sql = $this->db->prepare('DELETE FROM `entreprises` WHERE `id`=?');
+        $sql->execute(array($id));
+        return true;
+    }
+
+    public function DeleteEntreprise($id)
+    {
+        $sql = $this->db->prepare('DELETE FROM `entreprises` WHERE `id`=?');
+        $sql->execute(array($id));
         return true;
     }
 
@@ -107,7 +177,7 @@ class Database
         $entreprises = array();
         $sql = $this->db->prepare('SELECT * FROM `entreprises`');
         $sql->execute();
-        while($row = $sql->fetch()) {
+        while ($row = $sql->fetch()) {
             $entreprise = new Entreprise($row['owner'], $row['name'], $row['address'], $row['city'], $row['products'], $row['phone']);
             $entreprise->setId($row['id']);
             array_push($entreprises, $entreprise);
@@ -118,10 +188,10 @@ class Database
     public function GetAllEntreprisesWithCity($city)
     {
         $entreprises = array();
-        $sql = $this->db->prepare('SELECT * FROM `business` WHERE `city`=?');
+        $sql = $this->db->prepare('SELECT * FROM `entreprises` WHERE `city`=?');
         $sql->execute(array($city));
         while ($row = $sql->fetch()) {
-            $entreprise = new Entreprise($row['owner'], $row['name'], $row['address'], $row['city'], $row['sell_type'], $row['payment_method']);
+            $entreprise = new Entreprise($row['owner'], $row['name'], $row['address'], $row['city'], $row['products'], $row['phone']);
             array_push($entreprises, $entreprise);
         }
         return $entreprises;
@@ -130,10 +200,10 @@ class Database
     public function GetAllEntreprisesWithProduct($product)
     {
         $entreprises = array();
-        $sql = $this->db->prepare('SELECT * FROM `business` WHERE `sell_type`=?');
+        $sql = $this->db->prepare('SELECT * FROM `entreprises` WHERE `products`=?');
         $sql->execute(array($product));
         while ($row = $sql->fetch()) {
-            $entreprise = new Entreprise($row['owner'], $row['name'], $row['address'], $row['city'], $row['sell_type'], $row['payment_method']);
+            $entreprise = new Entreprise($row['owner'], $row['name'], $row['address'], $row['city'], $row['products'], $row['phone']);
             array_push($entreprises, $entreprise);
         }
         return $entreprises;
@@ -142,14 +212,12 @@ class Database
     public function GetAllEntreprisesWithProductAndCity($product, $city)
     {
         $entreprises = array();
-        $sql = $this->db->prepare('SELECT * FROM `business` WHERE `city`=? AND `sell_type`=?');
-        $sql->execute(array($city, $product ));
+        $sql = $this->db->prepare('SELECT * FROM `entreprises` WHERE `city`=? AND `products`=?');
+        $sql->execute(array($city, $product));
         while ($row = $sql->fetch()) {
-            $entreprise = new Entreprise($row['owner'], $row['name'], $row['address'], $row['city'], $row['sell_type'], $row['payment_method']);
+            $entreprise = new Entreprise($row['owner'], $row['name'], $row['address'], $row['city'], $row['products'], $row['phone']);
             array_push($entreprises, $entreprise);
         }
         return $entreprises;
     }
-
 }
-?>

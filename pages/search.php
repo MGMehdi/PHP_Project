@@ -51,7 +51,7 @@ if (isset($_POST['Products']) && isset($_POST['Locations'])) {
                     <select name="Locations" class="custom-select">
                         <option value="ALL">Toutes les régions</option>
                         <?php foreach ($cities as $city) { ?>
-                            <option value="<?php echo htmlspecialchars($city->getCity()) ?>"><?php echo htmlspecialchars($city->getCity()) ?></option>
+                            <option value="<?php echo $city->getId()?>"><?php echo htmlspecialchars($city->getCity()) ?></option>
                         <?php } ?>
                     </select>
 
@@ -77,7 +77,7 @@ if (isset($_POST['Products']) && isset($_POST['Locations'])) {
                         <?php foreach ($entreprises as $entreprise) { ?>
                             <tr>
                                 <td><?php echo htmlspecialchars($entreprise->getName()) ?></td>
-                                <td><?php echo htmlspecialchars($entreprise->getAddress()).' - '.$db->GetOneCity($entreprise->getId())->getCity()?></td>
+                                <td><?php echo htmlspecialchars($entreprise->getAddress()).' - '.$db->GetOneCity($entreprise->getCity())->getCity()?></td>
                                 <td><?php echo htmlspecialchars($entreprise->getProduct()) ?></td>
                                 <td><?php echo htmlspecialchars($entreprise->getPhone())?></td>
                             </tr>

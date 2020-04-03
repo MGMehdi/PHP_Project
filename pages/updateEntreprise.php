@@ -8,12 +8,13 @@ $db = new Database();
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 $cities = $db->GetAllCities();
-$value = array('name' => '', 'product' => '', 'phone' => '', 'address' => '', 'district' => '');
+$entreprise = $db->GetMyEntreprise($_SESSION['idEntreprise']);
+$value = array('name' => $entreprise->getName(), 'product' => $entreprise->getProduct(), 'phone' => $entreprise->getPhone(), 'address' => $entreprise->getAddress(), 'district' => $entreprise->getCity());
 $errors = array('name' => '', 'product' => '', 'phone' => '', 'address' => '', 'district' => '');
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-if (isset($_POST['submit'])) {
+if (isset($_POST['save'])) {
     if (empty($_POST['name'])) {
         $errors['name'] = 'Nom manquant';
     } else if (empty($_POST['product'])) {
@@ -36,7 +37,10 @@ if (isset($_POST['submit'])) {
         $errors['district'] = 'Choisissez un arondissement';
     } else {
         $entreprise = new Entreprise($_SESSION['id'], $_POST['name'], $_POST['address'], $_POST['district'], $_POST['product'], $_POST['phone']);
-        if ($db->AddEntreprises($entreprise)) {
+        $entreprise->setId($_SESSION['idEntreprise']);
+        echo $entreprise->getId().' COUCOU';
+        $_SESSION['idEntreprise']='';
+        if ($db->UpdateEntreprises($entreprise)) {
             header('Location: myentreprise.php');
         }
     }
@@ -57,8 +61,8 @@ if (isset($_POST['submit'])) {
     <div class="container">
         <div id="loginCard" class="card" style="width: 30rem;">
             <div class="card-body">
-                <h3 class="card-title text-center">Ajouter votre entreprise</h3>
-                <form action="addentreprise.php" method="post">
+                <h3 class="card-title text-center">Modifier votre entreprise</h3>
+                <form action="updateEntreprise.php" method="post">
                     <div class="form-group">
                         <label for="name">Nom</label>
                         <input type="text" class="form-control" name="name" value="<?php echo $value['name'] ?>">
@@ -86,15 +90,20 @@ if (isset($_POST['submit'])) {
                         <label for="district">Arrondissement</label>
                         <select name="district" class="custom-select">
                             <option value="---">---</option>
-                            <?php foreach ($cities as $city) { ?>
-                                <option value="<?php echo $city->getId() ?>"><?php echo $city->getCity() ?></option>
+                            <?php foreach ($cities as $city) { 
+                                if ($city->getId() == $entreprise->getCity()) {
+                                    echo '<option selected value="'.$city->getId().'">'.$city->getCity().'</option>';
+                                } else {
+                                    echo '<option value="' . $city->getId() . '">' . $city->getCity() . '</option>';
+                                }
+                                ?>
                             <?php } ?>
                         </select>
                         <div class="inputError"><?php echo $errors['district'] ?></div>
 
                     </div>
                     <div class="text-center">
-                        <input type="submit" name="submit" class="btn btn-secondary" value="Ajouter">
+                        <input type="submit" name="save" class="btn btn-secondary" value="Enregistrer">
                     </div>
                 </form>
             </div>

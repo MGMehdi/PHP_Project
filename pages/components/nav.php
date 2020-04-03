@@ -29,12 +29,6 @@ if (empty($_SESSION['surname'])) {
                 <li class="nav-item">
                     <a class="nav-link" href="./search.php">Search</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Features</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Pricing</a>
-                </li>
             </ul>
             <a class="navbar-text" href="profil.php"><?php echo $login ?></a>
 
@@ -42,5 +36,4 @@ if (empty($_SESSION['surname'])) {
     </nav>
 
 </body>
-
 </html>
