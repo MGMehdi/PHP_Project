@@ -6,7 +6,6 @@ $db = new Database();
 
 ////////////////////////////////////////////////////////////////////////////
 
-
 $cities = $db->GetAllCities();
 $productions = $db->GetAllEntreprises();
 
@@ -14,10 +13,6 @@ $productions = $db->GetAllEntreprises();
 $selectLocations = 0;
 $selectProducts = 0;
 $entreprises = array();
-
-
-
-
 
 if (isset($_POST['Products']) && isset($_POST['Locations'])) {
     if ($_POST['Products'] == 'ALL' && $_POST['Locations'] == 'ALL') {

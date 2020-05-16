@@ -14,8 +14,12 @@ class User{
         $this->id = htmlspecialchars($id);
         $this->name = htmlspecialchars($name);
         $this->surname = htmlspecialchars($surname);
-        $this->mail = htmlspecialchars($mail);
-        $this->password = password_hash($password, PASSWORD_DEFAULT);
+		$this->mail = htmlspecialchars($mail);
+		if ($password == '') {
+			$this->password = '';
+		} else {
+			$this->password = password_hash($password, PASSWORD_DEFAULT);
+		}
         $this->admin = htmlspecialchars($admin);
         $this->seller = htmlspecialchars($seller);
     }
