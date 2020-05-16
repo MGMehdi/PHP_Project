@@ -1,3 +1,14 @@
 {
-    "liveServer.settings.multiRootWorkspaceName": "PHP_Project"
+	"liveServer.settings.multiRootWorkspaceName": "PHP_Project",
+	"sqltools.connections": [
+		{
+			"database": "php",
+			"dialect": "MySQL",
+			"name": "PHP",
+			"password": "Test123*",
+			"port": 3306,
+			"server": "localhost",
+			"username": "toto"
+		}
+	]
 }

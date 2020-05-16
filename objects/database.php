@@ -93,7 +93,7 @@ class Database
 
 	public function beASeller($user)
 	{
-		$sql = $this->db->prepare('UPDATE `users` SET `isseller`=2 WHERE id=?');
+		$sql = $this->db->prepare('UPDATE `users` SET `isseller`=' . $user->getSeller() . ' WHERE id=?');
 		$sql->execute(array($user->getId()));
 		return true;
 	}
