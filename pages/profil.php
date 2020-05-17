@@ -35,8 +35,14 @@ if (isset($_POST['Update'])) {
 if (isset($_POST['Password'])) {
 	header('Location: updatePassword.php');
 }
-if (isset($_POST['admin'])) {
-	header('Location: admin.php');
+if (isset($_POST['adminSeller'])) {
+	header('Location: adminSeller.php');
+}
+if (isset($_POST['adminUser'])) {
+	header('Location: adminUser.php');
+}
+if (isset($_POST['adminEntreprise'])) {
+	header('Location: adminEntreprise.php');
 }
 ?>
 
@@ -60,7 +66,9 @@ if (isset($_POST['admin'])) {
 				<input type="button" value="Devenir un vendeur" onclick="Open('seller')">
 			<?php } ?>
 			<?php if ($_SESSION['admin']) { ?>
-				<input type="submit" value="Panneau modérateur" name="admin">
+				<input type="submit" value="Valider les vendeurs" name="adminSeller">
+				<input type="submit" value="Modifier un utilisateur" name="adminUser">
+				<input type="submit" value="Modifier une entreprise" name="adminEntreprise">
 			<?php } ?>
 			<input type="submit" value="Changer mes données" name="Update">
 			<input type="submit" value="Changer de mots de passe" name="Password">

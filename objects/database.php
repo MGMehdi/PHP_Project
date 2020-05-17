@@ -50,7 +50,6 @@ class Database
 		$sql->execute(array($id));
 
 		while ($row = $sql->fetch()) {
-			print_r($row);
 			return $user = new User($row['id'], $row['name'], $row['surname'], $row['mail'], $row['password'], $row['isadmin'], $row['isseller']);
 		}
 	}
