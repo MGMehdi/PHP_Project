@@ -52,24 +52,22 @@ body{
     font-weight: bold;
 }
 
-#askDeleteBackground{
+#cardBackground{
     padding-top: 20em;
     display: none;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%; 
-    height: 100%;
+	height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
 }
+#deleteCard, #sellerCard, #helpCard{
+	display: none;
+	margin: 0 auto;
+}
 
-#askBecomeSeller{
-    padding-top: 20em;
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%; 
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+#Message {
+	box-sizing:border-box;
+	width: 100%;
 }
