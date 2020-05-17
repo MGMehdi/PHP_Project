@@ -105,7 +105,7 @@ class Database
 		$sql = $this->db->prepare('SELECT * FROM `location`');
 		$sql->execute();
 		while ($row = $sql->fetch()) {
-			$city = new City($row['city'], $row['province']);
+			$city = new City($row['id'],$row['city'], $row['province']);
 			$city->setId($row['id']);
 			array_push($cities, $city);
 		}
@@ -121,6 +121,23 @@ class Database
 			$city->setId($id);
 		}
 		return $city;
+	}
+
+	public function UpdateCity($city)
+	{
+		$sql = $this->db->prepare('UPDATE `location` SET `city`=?, province=? WHERE id=?');
+		$sql->execute(array($city->getCity(), $city->getProvince(), $city->getId()));
+		return true;
+	}
+
+	public function AddCity($city)
+	{
+		try {
+			$sql = $this->db->prepare('INSERT INTO `location` (`city`, `province`) VALUES ( ?, ?)');
+			$sql->execute(array($city->getCity(), $city->getProvince()));
+		} catch (\Throwable $th) {
+			throw $th;
+		}
 	}
 
 	/*****************************************************************************************************************/

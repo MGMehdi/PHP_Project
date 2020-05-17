@@ -21,8 +21,8 @@ if (isset($_POST['submitSearch'])) {
 		$user['surname'] = $_POST['surname'];
 		$errors['mail'] = "Entrez une adresse mail";
 	} else {
-		$user = new User($_POST['id'], $_POST['name'], $_POST['surname'], $_POST['mail'], '', '', '');
-		if ($db->updateUser($user)) {
+		$user = new User($_POST['id'], $_POST['name'], $_POST['surname'], $_POST['mail'], '', '', $_POST['seller']);
+		if ($db->updateUser($user) && $db->beASeller($user)) {
 			header('Location: profil.php');
 		}
 	}
@@ -39,7 +39,7 @@ if (isset($_POST['submitSearch'])) {
 	$subject = "E-Local - Votre nouveau mot de passe";
 	$body = 'Bonjour ' . $_POST['name'] . htmlspecialchars(",\n Vous avez fait une demande de changement de mot de passe auprès de nos modérateurs.\n
 	Voici votre nouveau mot de passe :\n
-	").$randomString."\n
+	") . $randomString . "\n
 	Si ce n'était pas vous, veuillez directement changer votre mot de passe.\n\n
 	Cordialement\n\n
 	L'équipe E-Local";
@@ -117,6 +117,27 @@ if (isset($_POST['submitSearch'])) {
 																					} ?>">
 						<div class="inputError"><?php echo $errors['mail'] ?></div>
 					</div>
+					<div class="form-group">
+						<label for="Seller">Vendeur</label>
+						<select name="seller" class="form-control">
+							<option value="" <?php if($user == null)  echo 'selected' ?> disabled></option>
+							<option value="5" <?php try {
+								if ($user->getSeller() == 5) echo 'selected';
+							} catch (\Throwable $th) {
+								//throw $th;
+							} ?>>Refusé</option>
+							<option value="1" <?php try {
+								if ($user->getSeller() == 1) echo 'selected';
+							} catch (\Throwable $th) {
+								//throw $th;
+							} ?>>Accepté</option>
+							<option value="2" <?php try {
+								if ($user->getSeller() == 2) echo 'selected';
+							} catch (\Throwable $th) {
+								//throw $th;
+							} ?>>En attende</option>
+						</select>
+					</div>
 					<div class="text-center">
 						<input type="submit" class="btn btn-secondary" name="submit" value="Enregistrer">
 						<input type="submit" class="btn btn-warning" name="reset" value="Réeinitialiser mot de passe">
@@ -126,24 +147,26 @@ if (isset($_POST['submitSearch'])) {
 				</div>
 			</div>
 		</div>
-		<div id="askDeleteBackground" class="text-center" onclick="Close()">
-			<div id="loginCard" class="card" style="width: 40rem;">
-				<div class="card-body">
-					<h3 class="card-title">Vous nous quittez ?</h3>
-					<h5>Etes-vous sûr de vouloir supprimer votre compte ?</h5>
-					<input type="submit" name="delete" class="btn btn-danger" value="Oui">
-					<input type="button" name="Non" class="btn btn-success" value="Non" onclick="Close()">
-				</div>
+		<div id="cardBackground" onclick="Close()"></div>
+		<div id="updateCard" class="card text-center" style="width: 40rem; top:-30em">
+			<div class="card-body">
+				<h3 class="card-title">Valider la modification ?</h3>
+				<h5></h5>
+				<input type="submit" name="delete" class="btn btn-danger" value="Oui">
+				<input type="button" name="Non" class="btn btn-success" value="Non" onclick="Close()">
 			</div>
 		</div>
+
 	</form>
 	<script>
 		function Open(value) {
-			document.getElementById('askDeleteBackground').style.display = 'block';
+			document.getElementById('cardBackground').style.display = 'block';
+			document.getElementById('updateCard').style.display = 'block';
 		}
 
 		function Close() {
-			document.getElementById('askDeleteBackground').style.display = 'none';
+			document.getElementById('cardBackground').style.display = 'none';
+			document.getElementById('updateCard').style.display = 'none';
 		}
 	</script>
 

@@ -42,8 +42,8 @@ if (isset($_POST['adminSeller'])) {
 if (isset($_POST['adminUser'])) {
 	header('Location: adminUser.php');
 }
-if (isset($_POST['adminEntreprise'])) {
-	header('Location: adminEntreprise.php');
+if (isset($_POST['adminCity'])) {
+	header('Location: adminCity.php');
 }
 
 if (isset($_POST['Send'])) {
@@ -76,7 +76,7 @@ if (isset($_POST['Send'])) {
 			<?php if ($_SESSION['admin']) { ?>
 				<input type="submit" value="Valider les vendeurs" name="adminSeller">
 				<input type="submit" value="Modifier un utilisateur" name="adminUser">
-				<input type="submit" value="Modifier une entreprise" name="adminEntreprise">
+				<input type="submit" value="Modifier les villes" name="adminCity">
 			<?php } ?>
 			<input type="submit" value="Changer mes données" name="Update">
 			<input type="submit" value="Changer de mots de passe" name="Password">

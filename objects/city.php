@@ -4,7 +4,8 @@ class City {
     private $city;
     private $province;
 
-    public function __construct($city, $province) {
+    public function __construct($id, $city, $province) {
+        $this->id = $id;
         $this->city = $city;
         $this->province = $province;
     }
