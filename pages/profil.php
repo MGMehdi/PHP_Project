@@ -48,7 +48,7 @@ if (isset($_POST['adminCity'])) {
 
 if (isset($_POST['Send'])) {
 	$to = "mgmehdi@tutanota.com";
-	$subject = "Utilisateur : ". $_SESSION['id']. " - ". utf8_decode($_POST['Subject']);
+	$subject = "Utilisateur : " . $_SESSION['id'] . " - " . utf8_decode($_POST['Subject']);
 	mail($to, $subject, utf8_decode($_POST['Message']));
 	header('Location: profil.php');
 }
@@ -69,65 +69,77 @@ if (isset($_POST['Send'])) {
 		<h1>Bienvenue <?php echo $_SESSION['surname'] ?></h1>
 		<form action="profil.php" method="post">
 			<?php if ($_SESSION['seller'] == 1 && !$_SESSION['admin']) { ?>
-				<input type="submit" value="Mes productions" name="MyProducts">
+				<input class="btn btn-secondary" type="submit" value="Mes productions" name="MyProducts">
 			<?php } else if (!$_SESSION['seller'] && !$_SESSION['admin']) { ?>
-				<input type="button" value="Devenir un vendeur" onclick="Open('seller')">
+				<input class="btn btn-secondary" type="button" value="Devenir un vendeur" onclick="Open('seller')">
 			<?php } ?>
 			<?php if ($_SESSION['admin']) { ?>
-				<input type="submit" value="Valider les vendeurs" name="adminSeller">
-				<input type="submit" value="Modifier un utilisateur" name="adminUser">
-				<input type="submit" value="Modifier les villes" name="adminCity">
+				<div class="profilPannel">
+					<h5>Panneaux d'administration</h5>
+					<input class="btn btn-secondary" type="submit" value="Valider les vendeurs" name="adminSeller">
+					<input class="btn btn-secondary" type="submit" value="Modifier un utilisateur" name="adminUser">
+					<input class="btn btn-secondary" type="submit" value="Modifier les villes" name="adminCity">
+				</div>
+
 			<?php } ?>
-			<input type="submit" value="Changer mes données" name="Update">
-			<input type="submit" value="Changer de mots de passe" name="Password">
-			<input type="submit" value="Déconnexion" name="Disconnect">
-			<input type="button" value="Demander un support" name="Contact" onclick="Open('support')">
-			<?php if (!$_SESSION['admin']) { ?>
-				<input type="button" value="Supprimer mon compte" onclick="Open('delete')">
-			<?php } ?>
+			<div class="profilPannel">
+				<h5>Gestion du compte</h3>
+					<input class="btn btn-secondary" type="submit" value="Changer mes données" name="Update">
+					<input class="btn btn-secondary" type="submit" value="Changer de mots de passe" name="Password">
+					<input class="btn btn-secondary" type="submit" value="Déconnexion" name="Disconnect">
+					<?php if (!$_SESSION['admin']) { ?>
+						<input class="btn btn-danger" type="button" value="Supprimer mon compte" onclick="Open('delete')">
+					<?php } ?>
+			</div>
+
+			<div class="profilPannel">
+				<h5>Support</h5>
+				<input class="btn btn-secondary" type="button" value="Demander un support" name="Contact" onclick="Open('support')">
+			</div>
 		</form>
+	</div>
 
-		<div id="cardBackground" class="text-center" onclick="Close('background')"></div>
-		<div id="deleteCard" class="card" style="width: 40rem;">
-			<div class="card-body">
-				<h3 class="card-title">Vous nous quittez ?</h3>
-				<h5>Etes-vous sûr de vouloir supprimer votre compte ?</h5>
-				<form action="profil.php" method="post">
-					<input type="submit" name="DeleteMe" class="btn btn-danger" value="Oui">
-					<input type="button" name="Non" class="btn btn-success" value="Non" onclick="Close()">
-				</form>
-			</div>
-		</div>
-
-		<div id="sellerCard" class="card" style="width: 40rem;">
-			<div class="card-body">
-				<h3 class="card-title">Devenir un vendeur ?</h3>
-				<h5>
-					Etes-vous sûr de vouloir devenir un vendeur ?<br>
-					Un modérateur devra valider cette demande.
-				</h5>
-				<form action="profil.php" method="post">
-					<input type="submit" name="BeASeller" class="btn btn-danger" value="Oui">
-					<input type="button" name="Non" class="btn btn-success" value="Non" onclick="Close()">
-				</form>
-			</div>
-		</div>
-
-		<div id="helpCard" class="card" style="width: 40rem; top:-10em">
-			<div class="card-body">
-				<h3 class="card-title">Demander un support</h3>
-				<form action="profil.php" method="post">
-					<label for="Subject">Sujet</label>
-					<input type="text" class="form-control" name="Subject" id="">
-					<label for="Message">Votre message</label>
-					<textarea name="Message" id="Message" cols="" rows="10"></textarea>
-
-					<input type="submit" name="Send" class="btn btn-danger" value="Envoyer">
-					<input type="button" name="" class="btn btn-success" value="Anuler" onclick="Close()">
-				</form>
-			</div>
+	<div id="cardBackground" class="" onclick="Close('background')"></div>
+	<div id="deleteCard" class="card text-center">
+		<div class="card-body">
+			<h3 class="card-title">Vous nous quittez ?</h3>
+			<h5>Etes-vous sûr de vouloir supprimer votre compte ?</h5>
+			<form action="profil.php" method="post">
+				<input type="submit" name="DeleteMe" class="btn btn-danger" value="Oui">
+				<input type="button" name="Non" class="btn btn-success" value="Non" onclick="Close()">
+			</form>
 		</div>
 	</div>
+
+	<div id="sellerCard" class="card text-center">
+		<div class="card-body">
+			<h3 class="card-title">Devenir un vendeur ?</h3>
+			<h5>
+				Etes-vous sûr de vouloir devenir un vendeur ?<br>
+				Un modérateur devra valider cette demande.
+			</h5>
+			<form action="profil.php" method="post">
+				<input type="submit" name="BeASeller" class="btn btn-danger" value="Oui">
+				<input type="button" name="Non" class="btn btn-success" value="Non" onclick="Close()">
+			</form>
+		</div>
+	</div>
+
+	<div id="helpCard" class="card ">
+		<div class="card-body">
+			<h3 class="card-title text-center">Demander un support</h3>
+			<form action="profil.php" method="post">
+				<label for="Subject">Sujet</label>
+				<input type="text" class="form-control" name="Subject" id="">
+				<label for="Message">Votre message</label>
+				<textarea name="Message" id="Message" cols="" rows="10"></textarea>
+
+				<input type="submit" name="Send" class="btn btn-danger" value="Envoyer">
+				<input type="button" name="" class="btn btn-success" value="Anuler" onclick="Close()">
+			</form>
+		</div>
+	</div>
+
 
 
 	<script>

@@ -1,74 +1,92 @@
-body{
-    margin: 0;
+body {
+	margin: 0;
 }
 
-#banner{
-    width: 100%;
-    margin-top: -20%;
+#banner {
+	width: 100%;
+	margin-top: -20%;
 }
 
-.navbar{
-    margin-bottom: 2em;
-    background-color: #5c5042;
+.navbar {
+	margin-bottom: 2em;
+	background-color: #5c5042;
 }
 
-.navbar>a{
-    color: white;
+.navbar>a {
+	color: white;
 }
-.navbar>div>a{
-    color: white;
+
+.navbar>div>a {
+	color: white;
 }
-.navbar>div>ul>li>a{
-    color: white;
+
+.navbar>div>ul>li>a {
+	color: white;
 }
 
 
-#loginCard{
-    margin: 0 auto;
+#loginCard {
+	margin: 0 auto;
 }
 
-.custom-select{
-    margin-bottom: 1.5em;
-    /* width: 20% !important; */
+.custom-select {
+	margin-bottom: 1.5em;
+	/* width: 20% !important; */
 }
 
-.optionRegion{
-    font-weight: bolder;
-    font-size: larger;
+.optionRegion {
+	font-weight: bolder;
+	font-size: larger;
 }
 
 .optionProvince {
-    font-weight: bold;
-    font-size: large;
+	font-weight: bold;
+	font-size: large;
 }
 
 .optionVille {
-    padding-left: 1.5em;
-    font-size: medium;
+	padding-left: 1.5em;
+	font-size: medium;
 }
 
-.inputError{
-    color: rgb(167, 1, 1);
-    font-weight: bold;
+.inputError {
+	color: rgb(167, 1, 1);
+	font-weight: bold;
 }
 
-#cardBackground{
-    padding-top: 20em;
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%; 
-	height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-}
-#deleteCard, #sellerCard, #helpCard, #updateCard, #addCity{
+#cardBackground {
+	padding-top: 20em;
 	display: none;
-	left: 35%;
-	position: fixed
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+}
+
+#deleteCard,
+#sellerCard,
+#helpCard,
+#updateCard,
+#addCity {
+	display: none;
+	position: fixed;
+	width: 40em;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
 }
 
 #Message {
-	box-sizing:border-box;
+	box-sizing: border-box;
 	width: 100%;
+}
+
+.profilPannel {
+	margin: 1em 0;
+}
+
+.btn {
+	margin: 0.2em;
 }

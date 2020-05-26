@@ -56,7 +56,7 @@ if (isset($_POST['Products']) && isset($_POST['Locations'])) {
                             <option value="<?php echo htmlspecialchars($production->getProduct()) ?>"><?php echo htmlspecialchars($production->getProduct()) ?></option>
                         <?php } ?>
                     </select>
-                    <input type="submit" value="Rechercher">
+                    <input type="submit" class="btn btn-secondary btn-lg btn-block" value="Rechercher">
                 </form>
             </div>
 
