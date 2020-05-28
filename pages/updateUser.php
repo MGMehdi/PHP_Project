@@ -20,8 +20,8 @@ if (isset($_POST['submit'])) {
 	} else {
 		$user = new User($_SESSION['id'], $_POST['name'], $_POST['surname'], $_POST['mail'], '', '', '');
 		if ($db->updateUser($user)) {
-			$_SESSION['name'] = $_POST['name'];
-			$_SESSION['surname'] = $_POST['surname'];
+			$_SESSION['name'] = htmlspecialchars($_POST['name']);
+			$_SESSION['surname'] = htmlspecialchars($_POST['surname']);
 			header('Location: profil.php');
 		}
 	}

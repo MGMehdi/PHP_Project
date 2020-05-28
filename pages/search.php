@@ -46,14 +46,14 @@ if (isset($_POST['Products']) && isset($_POST['Locations'])) {
                     <select name="Locations" class="custom-select">
                         <option value="ALL">Toutes les régions</option>
                         <?php foreach ($cities as $city) { ?>
-                            <option value="<?php echo $city->getId()?>"><?php echo htmlspecialchars($city->getCity()) ?></option>
+                            <option value="<?php echo $city->getId()?>"><?php echo ($city->getCity()) ?></option>
                         <?php } ?>
                     </select>
 
                     <select name="Products" class="custom-select">
                         <option value="ALL">Toutes les productions</option>
                         <?php foreach ($productions as $production) { ?>
-                            <option value="<?php echo htmlspecialchars($production->getProduct()) ?>"><?php echo htmlspecialchars($production->getProduct()) ?></option>
+                            <option value="<?php echo ($production->getProduct()) ?>"><?php echo ($production->getProduct()) ?></option>
                         <?php } ?>
                     </select>
                     <input type="submit" class="btn btn-secondary btn-lg btn-block" value="Rechercher">
@@ -71,10 +71,10 @@ if (isset($_POST['Products']) && isset($_POST['Locations'])) {
                     <tbody>
                         <?php foreach ($entreprises as $entreprise) { ?>
                             <tr>
-                                <td><?php echo htmlspecialchars($entreprise->getName()) ?></td>
-                                <td><?php echo htmlspecialchars($entreprise->getAddress()).' - '.$db->GetOneCity($entreprise->getCity())->getCity()?></td>
-                                <td><?php echo htmlspecialchars($entreprise->getProduct()) ?></td>
-                                <td><?php echo htmlspecialchars($entreprise->getPhone())?></td>
+                                <td><?php echo ($entreprise->getName()) ?></td>
+                                <td><?php echo ($entreprise->getAddress()).' - '.$db->GetOneCity($entreprise->getCity())->getCity()?></td>
+                                <td><?php echo ($entreprise->getProduct()) ?></td>
+                                <td><?php echo ($entreprise->getPhone())?></td>
                             </tr>
                         <?php } ?>
                     </tbody>

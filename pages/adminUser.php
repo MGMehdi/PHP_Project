@@ -10,7 +10,7 @@ $errors = array('name' => '', 'surname' => '', 'mail' => '');
 
 if (isset($_POST['submitSearch'])) {
 	$user = $db->GetUser($_POST['id']);
-} else if (isset($_POST['submit'])) {
+} else if (isset($_POST['update'])) {
 	if (empty($_POST['name'])) {
 		$errors['name'] = "Entrez un nom";
 	} else if (empty($_POST['surname'])) {
@@ -120,39 +120,55 @@ if (isset($_POST['submitSearch'])) {
 					<div class="form-group">
 						<label for="Seller">Vendeur</label>
 						<select name="seller" class="form-control">
-							<option value="" <?php if($user == null)  echo 'selected' ?> disabled></option>
+							<option value="" <?php if ($user == null)  echo 'selected' ?> disabled></option>
 							<option value="5" <?php try {
-								if ($user->getSeller() == 5) echo 'selected';
-							} catch (\Throwable $th) {
-								//throw $th;
-							} ?>>Refusé</option>
+													if ($user->getSeller() == 5) echo 'selected';
+												} catch (\Throwable $th) {
+													//throw $th;
+												} ?>>Refusé</option>
 							<option value="1" <?php try {
-								if ($user->getSeller() == 1) echo 'selected';
-							} catch (\Throwable $th) {
-								//throw $th;
-							} ?>>Accepté</option>
+													if ($user->getSeller() == 1) echo 'selected';
+												} catch (\Throwable $th) {
+													//throw $th;
+												} ?>>Accepté</option>
 							<option value="2" <?php try {
-								if ($user->getSeller() == 2) echo 'selected';
-							} catch (\Throwable $th) {
-								//throw $th;
-							} ?>>En attende</option>
+													if ($user->getSeller() == 2) echo 'selected';
+												} catch (\Throwable $th) {
+													//throw $th;
+												} ?>>En attende</option>
 						</select>
 					</div>
 					<div class="text-center">
-						<input type="submit" class="btn btn-secondary" name="submit" value="Enregistrer">
-						<input type="submit" class="btn btn-warning" name="reset" value="Réeinitialiser mot de passe">
-						<input type="button" class="btn btn btn-danger" value="Supprimer" onclick="Open()">
+						<input type="button" class="btn btn-secondary" name="submit" value="Enregistrer" onclick="Open('update')">
+						<input type="button" class="btn btn-warning" name="reset" value="Réeinitialiser mot de passe" onclick="Open('reset')">
+						<input type="button" class="btn btn btn-danger" value="Supprimer" onclick="Open('delete')">
 					</div>
 
 				</div>
 			</div>
 		</div>
 		<div id="cardBackground" onclick="Close()"></div>
-		<div id="updateCard" class="card text-center" style="width: 40rem; top:-30em">
+		<div id="updateCard" class="card text-center">
 			<div class="card-body">
 				<h3 class="card-title">Valider la modification ?</h3>
 				<h5></h5>
+				<input type="submit" name="update" class="btn btn-danger" value="Oui">
+				<input type="button" name="Non" class="btn btn-success" value="Non" onclick="Close()">
+			</div>
+		</div>
+		<div id="deleteCard" class="card text-center">
+			<div class="card-body">
+				<h3 class="card-title">Supprimer cet utilisateur ?</h3>
+				<h5></h5>
 				<input type="submit" name="delete" class="btn btn-danger" value="Oui">
+				<input type="button" name="Non" class="btn btn-success" value="Non" onclick="Close()">
+			</div>
+		</div>
+		<div id="resetCard" class="card text-center">
+			<div class="card-body">
+				<h3 class="card-title">Réinitialiser le mot de passe ?</h3>
+				<h5></h5>
+				<input type="submit" name="reset" class="btn btn-danger" value="Oui">
 				<input type="button" name="Non" class="btn btn-success" value="Non" onclick="Close()">
 			</div>
 		</div>
@@ -161,12 +177,28 @@ if (isset($_POST['submitSearch'])) {
 	<script>
 		function Open(value) {
 			document.getElementById('cardBackground').style.display = 'block';
-			document.getElementById('updateCard').style.display = 'block';
+			switch (value) {
+				case 'update':
+					document.getElementById('updateCard').style.display = 'block';
+					break;
+				case 'delete':
+					document.getElementById('deleteCard').style.display = 'block';
+					break;
+				case 'reset':
+					document.getElementById('resetCard').style.display = 'block';
+					break;
+
+				default:
+					break;
+			}
+
 		}
 
 		function Close() {
 			document.getElementById('cardBackground').style.display = 'none';
 			document.getElementById('updateCard').style.display = 'none';
+			document.getElementById('deleteCard').style.display = 'none';
+			document.getElementById('resetCard').style.display = 'none';
 		}
 	</script>
 

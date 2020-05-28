@@ -11,17 +11,17 @@ class User{
 
     public function __construct($id, $name, $surname, $mail, $password, $admin, $seller)
     {
-        $this->id = htmlspecialchars($id);
-        $this->name = htmlspecialchars($name);
-        $this->surname = htmlspecialchars($surname);
-		$this->mail = htmlspecialchars($mail);
+        $this->id = ($id);
+        $this->name = ($name);
+        $this->surname = ($surname);
+		$this->mail = ($mail);
 		if ($password == '') {
 			$this->password = '';
 		} else {
 			$this->password = password_hash($password, PASSWORD_DEFAULT);
 		}
-        $this->admin = htmlspecialchars($admin);
-        $this->seller = htmlspecialchars($seller);
+        $this->admin = ($admin);
+        $this->seller = ($seller);
     }
 
     public function getId()
@@ -30,7 +30,7 @@ class User{
     }
     public function setId($id)
     {
-        $this->id = htmlspecialchars($id);
+        $this->id = ($id);
         return $this;
     }
 
@@ -38,7 +38,7 @@ class User{
         return htmlspecialchars($this->mail);
     }
     public function setMail($mail){
-        $this->mail = htmlspecialchars($mail);
+        $this->mail = ($mail);
         return $this;
     }
 
@@ -46,7 +46,7 @@ class User{
         return htmlspecialchars($this->surname);
     }
     public function setSurname($surname){
-        $this->surname = htmlspecialchars($surname);
+        $this->surname = ($surname);
         return $this;
     }
 
@@ -54,7 +54,7 @@ class User{
         return htmlspecialchars($this->name);
     }
     public function setName($name){
-        $this->name = htmlspecialchars($name);
+        $this->name = ($name);
         return $this;
     }
 

@@ -17,25 +17,25 @@ if (isset($_POST['submit'])) {
     if (empty($_POST['name'])) {
         $errors['name'] = 'Nom manquant';
     } else if (empty($_POST['product'])) {
-        $value['name'] = $_POST['name'];
+        $value['name'] = ($_POST['name']);
         $errors['product'] = 'Pas de produit';
     } else if (empty($_POST['phone'])) {
-        $value['name'] = $_POST['name'];
-        $value['product'] = $_POST['product'];
+        $value['name'] = ($_POST['name']);
+        $value['product'] = ($_POST['product']);
         $errors['phone'] = 'Téléphone manquant';
     } else if (empty($_POST['address'])) {
-        $value['name'] = $_POST['name'];
-        $value['product'] = $_POST['product'];
-        $value['phone'] = $_POST['phone'];
+        $value['name'] = ($_POST['name']);
+        $value['product'] = ($_POST['product']);
+        $value['phone'] = ($_POST['phone']);
         $errors['address'] = 'Adresse manquante';
     } else if ($_POST['district'] == '---') {
-        $value['name'] = $_POST['name'];
-        $value['product'] = $_POST['product'];
-        $value['phone'] = $_POST['phone'];
-        $value['address'] = $_POST['address'];
+        $value['name'] = ($_POST['name']);
+        $value['product'] = ($_POST['product']);
+        $value['phone'] = ($_POST['phone']);
+        $value['address'] = ($_POST['address']);
         $errors['district'] = 'Choisissez un arondissement';
     } else {
-        $entreprise = new Entreprise($_SESSION['id'], $_POST['name'], $_POST['address'], $_POST['district'], $_POST['product'], $_POST['phone']);
+        $entreprise = new Entreprise($_SESSION['id'], ($_POST['name']), ($_POST['address']), $_POST['district'], ($_POST['product']), ($_POST['phone']));
         if ($db->AddEntreprises($entreprise)) {
             header('Location: myentreprise.php');
         }
@@ -61,24 +61,24 @@ if (isset($_POST['submit'])) {
                 <form action="addentreprise.php" method="post">
                     <div class="form-group">
                         <label for="name">Nom</label>
-                        <input type="text" class="form-control" name="name" value="<?php echo $value['name'] ?>">
+                        <input type="text" class="form-control" name="name" value="<?php echo htmlspecialchars($value['name']) ?>">
                         <div class="inputError"><?php echo $errors['name'] ?></div>
                     </div>
                     <div class="form-group">
                         <label for="product">Produit</label>
-                        <input type="text" class="form-control" name="product" value="<?php echo $value['product'] ?>">
+                        <input type="text" class="form-control" name="product" value="<?php echo htmlspecialchars($value['product']) ?>">
                         <div class="inputError"><?php echo $errors['product'] ?></div>
 
                     </div>
                     <div class="form-group">
                         <label for="phone">Téléphone</label>
-                        <input type="tel" class="form-control" name="phone" value="<?php echo $value['phone'] ?>">
+                        <input type="tel" class="form-control" name="phone" value="<?php echo htmlspecialchars($value['phone']) ?>">
                         <div class="inputError"><?php echo $errors['phone'] ?></div>
 
                     </div>
                     <div class="form-group">
                         <label for="address">Adresse</label>
-                        <input type="text" class="form-control" name="address" value="<?php echo $value['address'] ?>">
+                        <input type="text" class="form-control" name="address" value="<?php echo htmlspecialchars($value['address']) ?>">
                         <div class="inputError"><?php echo $errors['address'] ?></div>
 
                     </div>

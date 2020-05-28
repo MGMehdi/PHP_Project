@@ -53,10 +53,10 @@ if (isset($_POST['Oui'])) {
 					<tbody>
 						<?php foreach ($entreprises as $entreprise) { ?>
 							<tr>
-								<td><?php echo htmlspecialchars($entreprise->getName()) ?></td>
-								<td><?php echo htmlspecialchars($entreprise->getAddress()) ?></td>
-								<td><?php echo htmlspecialchars($entreprise->getProduct()) ?></td>
-								<td><?php echo htmlspecialchars($entreprise->getPhone()) ?></td>
+								<td><?php echo ($entreprise->getName()) ?></td>
+								<td><?php echo ($entreprise->getAddress()) ?></td>
+								<td><?php echo ($entreprise->getProduct()) ?></td>
+								<td><?php echo ($entreprise->getPhone()) ?></td>
 								<td>
 									<form action="myentreprise.php" method="post">
 										<button type="button" name="delete" onclick="Delete(<?php echo $entreprise->getId() ?>)"><img src="../images/delete.svg" alt="" srcset="" style="width: 2em;"></button>

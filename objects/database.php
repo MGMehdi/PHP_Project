@@ -36,7 +36,7 @@ class Database
 	{
 		try {
 			$sql = $this->db->prepare('INSERT INTO `users` (`name`, `surname`, `mail`, `password`) VALUES ( ?, ?, ?, ?)');
-			$sql->execute(array($user->getName(), $user->getSurname(), $user->getMail(), $user->getPassword()));
+			$sql->execute(array(htmlspecialchars_decode($user->getName()), htmlspecialchars_decode($user->getSurname()), htmlspecialchars_decode($user->getMail()), $user->getPassword()));
 			$user->setPassword('');
 			return $user;
 		} catch (\Throwable $th) {
@@ -86,7 +86,7 @@ class Database
 	public function updateUser($user)
 	{
 		$sql = $this->db->prepare('UPDATE `users` SET `name`=?, surname=?, mail=? WHERE id=?');
-		$sql->execute(array($user->getName(), $user->getSurname(), $user->getMail(), $user->getId()));
+		$sql->execute(array(htmlspecialchars_decode($user->getName()), htmlspecialchars_decode($user->getSurname()), htmlspecialchars_decode($user->getMail()), $user->getId()));
 		return true;
 	}
 
@@ -117,7 +117,7 @@ class Database
 		$sql = $this->db->prepare('SELECT * FROM `location` WHERE `id`=?');
 		$sql->execute(array($id));
 		while ($row = $sql->fetch()) {
-			$city = new City($row['city'], $row['province']);
+			$city = new City($id, $row['city'], $row['province']);
 			$city->setId($id);
 		}
 		return $city;
@@ -126,7 +126,7 @@ class Database
 	public function UpdateCity($city)
 	{
 		$sql = $this->db->prepare('UPDATE `location` SET `city`=?, province=? WHERE id=?');
-		$sql->execute(array($city->getCity(), $city->getProvince(), $city->getId()));
+		$sql->execute(array(htmlspecialchars_decode($city->getCity()), htmlspecialchars_decode($city->getProvince()), $city->getId()));
 		return true;
 	}
 
@@ -134,10 +134,17 @@ class Database
 	{
 		try {
 			$sql = $this->db->prepare('INSERT INTO `location` (`city`, `province`) VALUES ( ?, ?)');
-			$sql->execute(array($city->getCity(), $city->getProvince()));
+			$sql->execute(array(htmlspecialchars_decode($city->getCity()), htmlspecialchars_decode($city->getProvince())));
 		} catch (\Throwable $th) {
 			throw $th;
 		}
+	}
+
+	public function DeleteCity($id)
+	{
+		$sql = $this->db->prepare('DELETE FROM `location` WHERE `id`=?');
+		$sql->execute(array($id));
+		return true;
 	}
 
 	/*****************************************************************************************************************/
@@ -172,7 +179,7 @@ class Database
 	public function AddEntreprises($entreprise)
 	{
 		$sql = $this->db->prepare('INSERT INTO `entreprises`(`owner`, `name`, `address`, `city`, `products`, `phone`) VALUES (?, ?, ?, ?, ?, ?)');
-		$sql->execute(array($entreprise->getOwner(), $entreprise->getName(), $entreprise->getAddress(), $entreprise->getCity(), $entreprise->getProduct(), $entreprise->getPhone()));
+		$sql->execute(array($entreprise->getOwner(), htmlspecialchars_decode($entreprise->getName()), htmlspecialchars_decode($entreprise->getAddress()), $entreprise->getCity(), htmlspecialchars_decode($entreprise->getProduct()), htmlspecialchars_decode($entreprise->getPhone())));
 		return true;
 	}
 
@@ -180,7 +187,7 @@ class Database
 	{
 		error_log(print($entreprise->getId()));
 		$sql = $this->db->prepare('UPDATE `entreprises` SET `owner`=?, `name`=?, `address`=?, `city`=?, `products`=?, `phone`=? WHERE `id`=?');
-		$sql->execute(array($entreprise->getOwner(), $entreprise->getName(), $entreprise->getAddress(), $entreprise->getCity(), $entreprise->getProduct(), $entreprise->getPhone(), $entreprise->getId()));
+		$sql->execute(array($entreprise->getOwner(), htmlspecialchars_decode($entreprise->getName()), htmlspecialchars_decode($entreprise->getAddress()), $entreprise->getCity(), htmlspecialchars_decode($entreprise->getProduct()), htmlspecialchars_decode($entreprise->getPhone()), $entreprise->getId()));
 		return true;
 	}
 

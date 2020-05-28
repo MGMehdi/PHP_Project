@@ -18,7 +18,6 @@ include 'components/nav.php';
 <body>
 	<h1>Bienvenue</h1>
 
-
 </body>
 
 </html>

@@ -17,7 +17,10 @@ if (isset($_POST['add'])) {
 	$db->addCity($city);
 	header('Location: adminCity.php');
 }
-
+if (isset($_POST['Oui'])) {
+	$db->DeleteCity($_POST['idCity']);
+	header("Location: adminCity.php");
+}
 ?>
 
 <html lang="en">
@@ -32,36 +35,7 @@ if (isset($_POST['add'])) {
 
 <body>
 
-	<div id="cardBackground" onclick="Close()"></div>
-	<div id="updateCard" class="card text-center" style="width: 40rem;">
-		<div class="card-body">
-			<form action="adminCity.php" method="post">
-				<h3 class="card-title" id="card-title"></h3>
-				<label for="City">Ville</label>
-				<input type="text" class="form-control" name="City" id="City">
-				<label for="Province">Province</label>
-				<input type="text" class="form-control" name="Province" id="Province">
-				<input type="text" hidden name="Id" id="Id">
-				<input type="submit" name="update" class="btn btn-danger" value="Oui">
-				<input type="button" class="btn btn-success" value="Non" onclick="Close()">
-			</form>
-		</div>
-	</div>
-	<div id="cardBackground" onclick="Close()"></div>
-	<div id="addCity" class="card text-center" style="width: 40rem;">
-		<div class="card-body">
-			<form action="adminCity.php" method="post">
-				<h3 class="card-title" id="card-title"></h3>
-				<label for="City">Ville</label>
-				<input type="text" class="form-control" name="City" id="City">
-				<label for="Province">Province</label>
-				<input type="text" class="form-control" name="Province" id="Province">
-				<input type="text" hidden name="Id" id="Id">
-				<input type="submit" name="add" class="btn btn-danger" value="Oui">
-				<input type="button" class="btn btn-success" value="Non" onclick="Close()">
-			</form>
-		</div>
-	</div>
+
 
 	<h1>Modification des villes</h1>
 	<input type="button" class="btn btn-success" value="Ajouter une ville" onclick="addCity()">
@@ -79,7 +53,7 @@ if (isset($_POST['add'])) {
 					<td>
 						<form action="adminCity.php" method="post">
 							<button type="button" name="delete" onclick="Delete('<?php echo $city->getId() ?>')" style='background:none;border:none;padding:0'><img src="../images/delete.svg" width="40" height="40"></button>
-							<button type="button" name="modify" value="Modify" style='background:none;border:none;padding:0' onclick="Open('<?php echo $city->getId() ?>', '<?php echo $city->getCity() ?>', '<?php echo $city->getProvince() ?>')"><img src="../images/edit.svg" width="40" height="40"></button>
+							<button type="button" name="modify" value="Modify" style='background:none;border:none;padding:0' onclick="Open(`<?php echo $city->getId() ?>`, `<?php echo htmlspecialchars($city->getCity()) ?>`, `<?php echo htmlspecialchars($city->getProvince()) ?>`)"><img src="../images/edit.svg" width="40" height="40"></button>
 							<input hidden type="number" name="idEntreprise" value="<?php echo $city->getId() ?>">
 						</form>
 					</td>
@@ -88,9 +62,50 @@ if (isset($_POST['add'])) {
 		</tbody>
 	</table>
 
+
+	<div id="cardBackground" onclick="Close()"></div>
+	<div id="updateCard" class="card text-center">
+		<div class="card-body">
+			<form action="adminCity.php" method="post">
+				<h3 class="card-title" id="card-title">Modifier</h3>
+				<label for="City">Ville</label>
+				<input type="text" class="form-control" name="City" id="City">
+				<label for="Province">Province</label>
+				<input type="text" class="form-control" name="Province" id="Province">
+				<input type="text" hidden name="Id" id="Id">
+				<input type="submit" name="update" class="btn btn-danger" value="Oui">
+				<input type="button" class="btn btn-success" value="Non" onclick="Close()">
+			</form>
+		</div>
+	</div>
+	<div id="addCity" class="card text-center">
+		<div class="card-body">
+			<form action="adminCity.php" method="post">
+				<h3 class="card-title" id="card-title">Ajouter</h3>
+				<label for="City">Ville</label>
+				<input type="text" class="form-control" name="City" id="City">
+				<label for="Province">Province</label>
+				<input type="text" class="form-control" name="Province" id="Province">
+				<input type="text" hidden name="Id" id="Id">
+				<input type="submit" name="add" class="btn btn-danger" value="Oui">
+				<input type="button" class="btn btn-success" value="Non" onclick="Close()">
+			</form>
+		</div>
+	</div>
+	<div id="deleteCard" class="card text-center">
+		<div class="card-body">
+			<h3 class="card-title">Supprimer ?</h3>
+			<h5>Etes vous sûr de vouloir supprimer cette ville ?</h5>
+			<form action="adminCity.php" method="post">
+				<input type="number" name="idCity" hidden value="<?php echo $city->getId() ?>">
+				<input type="submit" name="Oui" class="btn btn-danger" value="Oui">
+				<input type="button" name="Non" class="btn btn-success" value="Non" onclick="Close()">
+			</form>
+		</div>
+	</div>
+
 	<script>
 		function Open(id, city, province) {
-			document.getElementById('card-title').innerHTML = "Modifier " + city;
 			document.getElementById('Id').value = id
 			document.getElementById('City').value = city
 			document.getElementById('Province').value = province
@@ -101,11 +116,17 @@ if (isset($_POST['add'])) {
 		function Close() {
 			document.getElementById('cardBackground').style.display = 'none';
 			document.getElementById('updateCard').style.display = 'none';
+			document.getElementById('deleteCard').style.display = 'none';
 		}
 
 		function addCity() {
 			document.getElementById('cardBackground').style.display = 'block';
 			document.getElementById('addCity').style.display = 'block';
+		}
+
+		function Delete(id) {
+			document.getElementById('cardBackground').style.display = 'block';
+			document.getElementById('deleteCard').style.display = 'block';
 		}
 	</script>
 

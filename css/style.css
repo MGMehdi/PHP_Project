@@ -68,6 +68,7 @@ body {
 #deleteCard,
 #sellerCard,
 #helpCard,
+#resetCard,
 #updateCard,
 #addCity {
 	display: none;
