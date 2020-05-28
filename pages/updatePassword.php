@@ -2,6 +2,11 @@
 include 'components/header.php';
 include 'components/nav.php';
 include '../objects/database.php';
+
+if (empty($_SESSION['surname'])) {
+	header('Location: login.php');
+}
+
 $db = new Database();
 $errors = array('pass' => '', 'secondPass' => '');
 
@@ -13,7 +18,7 @@ if (isset($_POST['submit'])) {
     } else {
         $user = new User($_SESSION['id'], '', '', '', $_POST['pass'], '', '');
         if ($db->updatePassword($user)) {
-            //header('Location: profil.php');
+            header('Location: profil.php');
         }
     }
 }

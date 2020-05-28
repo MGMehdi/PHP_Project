@@ -2,6 +2,11 @@
 include 'components/header.php';
 include 'components/nav.php';
 include '../objects/database.php';
+
+if (empty($_SESSION['surname'])) {
+	header('Location: login.php');
+}
+
 $db = new Database();
 
 $errors = array('name' => '', 'surname' => '', 'mail' => '');

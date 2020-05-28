@@ -4,6 +4,10 @@ include 'components/nav.php';
 include '../objects/user.php';
 include '../objects/database.php';
 
+if (empty($_SESSION['surname']) || $_SESSION['admin'] == 0) {
+	header('Location: home.php');
+}
+
 $db = new Database();
 $newSellers = $db->GetAllNewSeller();
 
@@ -14,11 +18,6 @@ if (isset($_POST['users'])) {
 		$db->beASeller($u);
 	}
 }
-
-if (isset($_POST['Ok'])) {
-	error_log(isset($_POST['seller']));
-}
-
 ?>
 
 <html lang="en">
@@ -33,37 +32,37 @@ if (isset($_POST['Ok'])) {
 </head>
 
 <body>
-	<h1>Demande pour devenir un vendeur</h1>
-	<form action="adminSeller.php" method="post">
-		<table class="table text-center">
-			<thead>
-				<th scope="col">Nom</th>
-				<th scope="col">Prénom</th>
-				<th scope="col">Mail</th>
-				<th scope="col">Vendeur</th>
-			</thead>
-			<tbody>
-				<?php foreach ($newSellers as $key => $newSeller) { ?>
-					<tr>
-						<td><?php echo ($newSeller->getName()) ?></td>
-						<td><?php echo ($newSeller->getSurname()) ?></td>
-						<td><?php echo ($newSeller->getMail()) ?></td>
-						<td>
-							<select name="seller" id="<?php echo ($key) ?>" onchange="setValue(<?php echo ($key) ?>)">
-								<option value="5">Refusé</option>
-								<option value="1">Accepté</option>
-								<option value="2" selected>En attende</option>
-							</select>
-						</td>
-					</tr>
-				<?php } ?>
-			</tbody>
-		</table>
-		<button type='submit' name='Ok' value='Validé' style='background:none;border:none;padding:0' onclick="Submit()"><img src='../images/0.svg' width="40" height="40"></button>
-	</form>
-
+	<div class="container-fluid">
+		<h1>Demande pour devenir un vendeur</h1>
+		<form action="adminSeller.php" method="post">
+			<table class="table text-center">
+				<thead>
+					<th scope="col">Nom</th>
+					<th scope="col">Prénom</th>
+					<th scope="col">Mail</th>
+					<th scope="col">Vendeur</th>
+				</thead>
+				<tbody>
+					<?php foreach ($newSellers as $key => $newSeller) { ?>
+						<tr>
+							<td><?php echo ($newSeller->getName()) ?></td>
+							<td><?php echo ($newSeller->getSurname()) ?></td>
+							<td><?php echo ($newSeller->getMail()) ?></td>
+							<td>
+								<select name="seller" id="<?php echo ($key) ?>" onchange="setValue(<?php echo ($key) ?>)">
+									<option value="5">Refusé</option>
+									<option value="1">Accepté</option>
+									<option value="2" selected>En attende</option>
+								</select>
+							</td>
+						</tr>
+					<?php } ?>
+				</tbody>
+			</table>
+			<button type='submit' name='Ok' value='Validé' style='background:none;border:none;padding:0' onclick="Submit()"><img src='../images/0.svg' width="40" height="40"></button>
+		</form>
+	</div>
 	<script>
-		console.log('coucou');
 		var users = [];
 		var user = null;
 		<?php
@@ -75,11 +74,12 @@ if (isset($_POST['Ok'])) {
 
 		function setValue(id) {
 			users[id].seller = document.getElementById(id).value;
-			console.log(users[id]);
 		}
 
 		function Submit() {
-			$.post('adminSeller.php', {users: JSON.stringify(users)});
+			$.post('adminSeller.php', {
+				users: JSON.stringify(users)
+			});
 		}
 	</script>
 

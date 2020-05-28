@@ -2,7 +2,7 @@
 session_start();
 
 if (empty($_SESSION['surname'])) {
-	$login = 'Login';
+	$login = 'Se connecter';
 } else {
 	$login = $_SESSION['surname'] . ' ' . $_SESSION['name'];
 }
@@ -27,7 +27,7 @@ if (empty($_SESSION['surname'])) {
 		<div class="collapse navbar-collapse" id="navbarNav">
 			<ul class="navbar-nav mr-auto">
 				<li class="nav-item">
-					<a class="nav-link" href="./search.php">Search</a>
+					<a class="nav-link" href="./search.php">Recherche</a>
 				</li>
 			</ul>
 			<ul class="navbar-nav">

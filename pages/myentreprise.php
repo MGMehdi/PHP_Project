@@ -2,14 +2,22 @@
 include 'components/header.php';
 include 'components/nav.php';
 include '../objects/database.php';
+
+if (empty($_SESSION['surname'])){
+	header('Location: home.php');
+}else if ($_SESSION['seller']!=1) {
+	header('Location: profil.php');
+}
+
+
 $db = new Database();
 $cities = $db->GetAllCities();
 
 $action = '';
-$entreprises = $db->GetMyEntreprises($_SESSION['id']);
+$entreprises = $db->GetmyEntreprises($_SESSION['id']);
 
 if (isset($_POST['NewEntreprise'])) {
-	header('Location: addentreprise.php');
+	header('Location: addEntreprise.php');
 }
 
 if (isset($_POST['modify'])) {
@@ -37,7 +45,7 @@ if (isset($_POST['Oui'])) {
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-sm-2 text-center">
-				<form action="myentreprise.php" method="post">
+				<form action="myEntreprise.php" method="post">
 					<input type="submit" class="btn btn-secondary" value="Nouvelle entreprise" name="NewEntreprise">
 				</form>
 			</div>
@@ -58,9 +66,9 @@ if (isset($_POST['Oui'])) {
 								<td><?php echo ($entreprise->getProduct()) ?></td>
 								<td><?php echo ($entreprise->getPhone()) ?></td>
 								<td>
-									<form action="myentreprise.php" method="post">
-										<button type="button" name="delete" onclick="Delete(<?php echo $entreprise->getId() ?>)"><img src="../images/delete.svg" alt="" srcset="" style="width: 2em;"></button>
-										<button type=" submit" name="modify" value="Modify"><img src="../images/edit.svg" style="width: 2em;"></button>
+									<form action="myEntreprise.php" method="post">
+										<button type="button" name="delete" onclick="Delete(<?php echo $entreprise->getId() ?>)" style='background:none;border:none;padding:0'><img src="../images/delete.svg" alt="" srcset="" style="width: 2em;"></button>
+										<button type=" submit" name="modify" value="Modify" style='background:none;border:none;padding:0'><img src="../images/edit.svg" style="width: 2em;"></button>
 										<input hidden type="number" name="idEntreprise" value="<?php echo $entreprise->getId() ?>">
 									</form>
 								</td>
@@ -76,7 +84,7 @@ if (isset($_POST['Oui'])) {
 			<div class="card-body">
 				<h3 class="card-title">Supprimer ?</h3>
 				<h5>Etes vous sûr de vouloir supprimer cette entrepreprise ?</h5>
-				<form action="myentreprise.php" method="post">
+				<form action="myEntreprise.php" method="post">
 					<input type="number" name="idEntreprise" hidden value="<?php echo $entreprise->getId() ?>">
 					<input type="submit" name="Oui" class="btn btn-danger" value="Oui">
 					<input type="button" name="Non" class="btn btn-success" value="Non" onclick="Close()">

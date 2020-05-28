@@ -11,7 +11,7 @@ if (empty($_SESSION['surname'])) {
 }
 
 if (isset($_POST['MyProducts'])) {
-	header('Location: myentreprise.php');
+	header('Location: myEntreprise.php');
 }
 
 if (isset($_POST['BeASeller'])) {

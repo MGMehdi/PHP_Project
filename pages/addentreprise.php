@@ -58,7 +58,7 @@ if (isset($_POST['submit'])) {
         <div id="loginCard" class="card" style="width: 30rem;">
             <div class="card-body">
                 <h3 class="card-title text-center">Ajouter votre entreprise</h3>
-                <form action="addentreprise.php" method="post">
+                <form action="addEntreprise.php" method="post">
                     <div class="form-group">
                         <label for="name">Nom</label>
                         <input type="text" class="form-control" name="name" value="<?php echo htmlspecialchars($value['name']) ?>">

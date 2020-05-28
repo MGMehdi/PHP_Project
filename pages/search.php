@@ -35,7 +35,7 @@ if (isset($_POST['Products']) && isset($_POST['Locations'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/bootstrap.css">
     <link rel="stylesheet" href="../css/style.css">
-    <title>Search</title>
+    <title>Rechercher</title>
 </head>
 
 <body>

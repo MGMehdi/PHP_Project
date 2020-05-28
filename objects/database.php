@@ -6,8 +6,8 @@ require_once 'city.php';
 class Database
 {
 	private static $dsn = 'mysql:dbname=php;host=127.0.0.1';
-	private static $dbUser = 'root';
-	private static $dbPassword = '';
+	private static $dbUser = 'toto';
+	private static $dbPassword = 'Test123*';
 	private $db;
 
 	public function __construct()
@@ -76,8 +76,6 @@ class Database
 
 	public function updatePassword($user)
 	{
-		print_r($user);
-
 		$sql = $this->db->prepare('UPDATE `users` SET `password`=? WHERE id=?');
 		$sql->execute(array($user->getPassword(), $user->getId()));
 		return true;
@@ -185,7 +183,6 @@ class Database
 
 	public function UpdateEntreprises($entreprise)
 	{
-		error_log(print($entreprise->getId()));
 		$sql = $this->db->prepare('UPDATE `entreprises` SET `owner`=?, `name`=?, `address`=?, `city`=?, `products`=?, `phone`=? WHERE `id`=?');
 		$sql->execute(array($entreprise->getOwner(), htmlspecialchars_decode($entreprise->getName()), htmlspecialchars_decode($entreprise->getAddress()), $entreprise->getCity(), htmlspecialchars_decode($entreprise->getProduct()), htmlspecialchars_decode($entreprise->getPhone()), $entreprise->getId()));
 		return true;

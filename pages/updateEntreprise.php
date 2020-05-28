@@ -3,6 +3,13 @@ include_once 'components/header.php';
 include_once 'components/nav.php';
 include_once '../objects/database.php';
 include_once '../objects/entreprise.php';
+
+if (empty($_SESSION['surname'])) {
+	header('Location: login.php');
+} else if ($_SESSION['seller']!=1) {
+	header('Location: profil.php');
+}
+
 $db = new Database();
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -41,7 +48,7 @@ if (isset($_POST['save'])) {
         echo $entreprise->getId().' COUCOU';
         $_SESSION['idEntreprise']='';
         if ($db->UpdateEntreprises($entreprise)) {
-            header('Location: myentreprise.php');
+            header('Location: myEntreprise.php');
         }
     }
 }

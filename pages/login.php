@@ -3,13 +3,12 @@ include_once 'components/header.php';
 include_once 'components/nav.php';
 include_once '../objects/database.php';
 
+if (!empty($_SESSION['surname'])) {
+	header('Location: profil.php');
+}
+
 $db = new Database();
 $errors = array('mail' => '', 'pass' => '', 'login' => '');
-
-// Au clic de connexion 
-// Je vérifie les logins
-// Si il y a une erreur j'affiche Utilisateur introuvable
-// Sinon je démarre une nouvelle session
 
 if (isset($_POST['SubmitLogin'])) {	
     $user = $db->login($_POST['mail'], $_POST['pass']);
@@ -56,7 +55,7 @@ if (isset($_POST['SubmitLogin'])) {
                         <input type="submit" name="SubmitLogin" class="btn btn-secondary" value="Connexion">
                     </div>
                 </form>
-                <p class="card-title text-center">Nouveau ? Cliquez <a href="add.php" style="text-decoration: none; color:black; font-weight: bold;">ici</a></p>
+                <p class="card-title text-center">Nouveau ? Cliquez <a href="addUser.php" style="text-decoration: none; color:black; font-weight: bold;">ici</a></p>
             </div>
         </div>
     </div>
