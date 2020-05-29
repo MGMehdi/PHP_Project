@@ -15,7 +15,18 @@ Le modérateur enregistré par défaut est :
 
 ## Configuration
 
+### Déplacer le projet
+
+Créer un lien symbolique avec le CMD
+
+```bash
+# Dossier de destination - dossier du projet
+mklink /d "E:\xampp\htdocs\PHP_Project" "E:\Mehdi\Documents\Code\PHP_Project"
+```
+
 ### php.ini
+
+Changer le chemin `sendmail_path` pour correspondre avec Xampp
 
 ```
 [mail function]
@@ -26,6 +37,10 @@ sendmail_path = "\"E:\xampp\sendmail\sendmail.exe\" -t"
 ```
 
 ### sendmail.ini
+
+`xampp\sendmail\sendmail.ini`
+
+Remplacer le contenu du fichier par ceci :
 
 ```
 [sendmail]
@@ -38,3 +53,7 @@ auth_username=i.am.jajino@gmail.com
 auth_password=dbyjdkvtiqyzqzyy
 force_sender=i.am.jajino@gmail.com
 ```
+
+### Pour fini
+
+Après avoir configurer Xampp

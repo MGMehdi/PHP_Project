@@ -105,7 +105,7 @@ if (isset($_POST['Oui'])) {
 				<h3 class="card-title">Supprimer ?</h3>
 				<h5>Etes vous sûr de vouloir supprimer cette ville ?</h5>
 				<form action="adminCity.php" method="post">
-					<input type="number" name="idCity" hidden value="<?php echo $city->getId() ?>">
+					<input id="btnDelete" type="number" name="idCity" hidden>
 					<input type="submit" name="Oui" class="btn btn-danger" value="Oui">
 					<input type="button" name="Non" class="btn btn-success" value="Non" onclick="Close()">
 				</form>
@@ -136,6 +136,7 @@ if (isset($_POST['Oui'])) {
 		function Delete(id) {
 			document.getElementById('cardBackground').style.display = 'block';
 			document.getElementById('deleteCard').style.display = 'block';
+			document.getElementById('btnDelete').value = id;
 		}
 	</script>
 

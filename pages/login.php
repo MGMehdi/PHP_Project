@@ -45,7 +45,7 @@ if (isset($_POST['SubmitLogin'])) {
                     <div class="inputError text-center"><?php echo $errors['login'] ?></div>
                     <div class="form-group">
                         <label for="mail">Mail</label>
-                        <input type="email" class="form-control" name="mail">
+                        <input type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" class="form-control" name="mail">
                     </div>
                     <div class="form-group">
                         <label for="pass">Mot de passe</label>

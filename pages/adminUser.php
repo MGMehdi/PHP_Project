@@ -86,13 +86,13 @@ if (isset($_POST['submitSearch'])) {
 																						echo 'value=' . $_POST['id'];
 																					}
 																					?>>
-						<div class="inputError"><?php if ($errorUser === null) echo "Utilisateur introuvable" ?></div>
+						<div class="inputError"><?php if ($user === null) echo "Utilisateur introuvable" ?></div>
 						<div class="text-center">
 							<input type="submit" class="btn btn-secondary" name="submitSearch" value="Chercher">
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="mail">Nom</label>
+						<label for="name">Nom</label>
 						<input type="text" class="form-control" name="name" value="<?php
 																					try {
 																						echo htmlspecialchars($user->getName());
@@ -102,7 +102,7 @@ if (isset($_POST['submitSearch'])) {
 						<div class="inputError"><?php echo $errors['name'] ?></div>
 					</div>
 					<div class="form-group">
-						<label for="mail">Prénom</label>
+						<label for="surname">Prénom</label>
 						<input type="text" class="form-control" name="surname" value="<?php
 																						try {
 																							echo htmlspecialchars($user->getSurname());
@@ -113,7 +113,7 @@ if (isset($_POST['submitSearch'])) {
 					</div>
 					<div class="form-group">
 						<label for="mail">Mail</label>
-						<input type="email" class="form-control" name="mail" value="<?php
+						<input type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" class="form-control" name="mail" value="<?php
 																					try {
 																						echo htmlspecialchars($user->getMail());
 																					} catch (\Throwable $th) {

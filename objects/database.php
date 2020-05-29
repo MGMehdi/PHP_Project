@@ -34,14 +34,11 @@ class Database
 
 	public function addUser($user)
 	{
-		try {
-			$sql = $this->db->prepare('INSERT INTO `users` (`name`, `surname`, `mail`, `password`) VALUES ( ?, ?, ?, ?)');
-			$sql->execute(array(htmlspecialchars_decode($user->getName()), htmlspecialchars_decode($user->getSurname()), htmlspecialchars_decode($user->getMail()), $user->getPassword()));
-			$user->setPassword('');
-			return $user;
-		} catch (\Throwable $th) {
-			throw $th;
-		}
+		$sql = $this->db->prepare('INSERT INTO `users` (`name`, `surname`, `mail`, `password`) VALUES ( ?, ?, ?, ?)');
+		$sql->execute(array(htmlspecialchars_decode($user->getName()), htmlspecialchars_decode($user->getSurname()), htmlspecialchars_decode($user->getMail()), $user->getPassword()));
+		$user->setPassword('');
+		$user->setId($this->db->lastInsertId());
+		return $user;
 	}
 
 	public function GetUser($id)
@@ -90,8 +87,8 @@ class Database
 
 	public function beASeller($user)
 	{
-		$sql = $this->db->prepare('UPDATE `users` SET `isseller`=' . $user->getSeller() . ' WHERE id=?');
-		$sql->execute(array($user->getId()));
+		$sql = $this->db->prepare('UPDATE `users` SET `isseller`=? WHERE id=?');
+		$sql->execute(array($user->getSeller(), $user->getId()));
 		return true;
 	}
 
@@ -103,7 +100,7 @@ class Database
 		$sql = $this->db->prepare('SELECT * FROM `location`');
 		$sql->execute();
 		while ($row = $sql->fetch()) {
-			$city = new City($row['id'],$row['city'], $row['province']);
+			$city = new City($row['id'], $row['city'], $row['province']);
 			$city->setId($row['id']);
 			array_push($cities, $city);
 		}

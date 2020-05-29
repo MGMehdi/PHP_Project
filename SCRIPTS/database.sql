@@ -5,31 +5,43 @@ USE `php`;
 
 -- --------------------------------------------------------
 
---
--- Table structure for table `entreprises`
---
+CREATE TABLE `users` (
+  `id` bigint PRIMARY KEY AUTO_INCREMENT,
+  `name` varchar(255),
+  `surname` varchar(255),
+  `mail` varchar(255) UNIQUE,
+  `password` varchar(255),
+  `isadmin` tinyint DEFAULT false,
+  `isseller` tinyint DEFAULT false
+);
 
 CREATE TABLE `entreprises` (
-  `id` bigint(20) NOT NULL,
-  `owner` bigint(20) DEFAULT NULL,
-  `name` varchar(50) DEFAULT NULL,
-  `address` varchar(255) DEFAULT NULL,
-  `city` bigint(20) DEFAULT NULL,
-  `products` varchar(50) DEFAULT NULL,
-  `phone` varchar(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `location`
---
+  `id` bigint PRIMARY KEY AUTO_INCREMENT,
+  `owner` bigint,
+  `name` varchar(255),
+  `address` varchar(255),
+  `city` bigint,
+  `products` varchar(255),
+  `phone` varchar(255)
+);
 
 CREATE TABLE `location` (
-  `id` bigint(20) NOT NULL,
-  `city` varchar(30) DEFAULT NULL,
-  `province` varchar(30) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `id` bigint PRIMARY KEY AUTO_INCREMENT,
+  `city` varchar(255) UNIQUE,
+  `province` varchar(255)
+);
+
+ALTER TABLE `entreprises` ADD FOREIGN KEY (`owner`) REFERENCES `users` (`id`);
+
+ALTER TABLE `entreprises` ADD FOREIGN KEY (`city`) REFERENCES `location` (`id`);
+
+
+--
+-- Create trigger remove entreprises for user
+--
+
+CREATE TRIGGER `DeleteUserEntreprise` BEFORE DELETE ON `users`
+ FOR EACH ROW DELETE FROM `entreprises` WHERE `entreprises`.`owner`=OLD.id;
 
 --
 -- Dumping data for table `location`
@@ -57,67 +69,13 @@ INSERT INTO `location` (`id`, `city`, `province`) VALUES
 (19, 'Namur', 'Namur'),
 (20, 'Philippeville', 'Namur');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `users`
---
-
-CREATE TABLE `users` (
-  `id` bigint(20) NOT NULL,
-  `name` varchar(50) DEFAULT NULL,
-  `surname` varchar(50) DEFAULT NULL,
-  `mail` varchar(70) DEFAULT NULL,
-  `password` varchar(255) DEFAULT NULL,
-  `isadmin` tinyint(1) DEFAULT 0,
-  `isseller` tinyint(1) DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Triggers `users`
---
-DELIMITER $$
-CREATE TRIGGER `Delete entreprise` BEFORE DELETE ON `users` FOR EACH ROW DELETE FROM entreprises WHERE entreprises.owner=OLD.id
-$$
-DELIMITER ;
-
---
--- Indexes for table `entreprises`
---
-ALTER TABLE `entreprises`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `owner` (`owner`),
-  ADD KEY `city` (`city`);
-
---
--- Indexes for table `location`
---
-ALTER TABLE `location`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `city` (`city`);
-
---
--- Indexes for table `users`
---
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `mail` (`mail`);
-
-
---
--- Constraints for table `entreprises`
---
-ALTER TABLE `entreprises`
-  ADD CONSTRAINT `entreprises_ibfk_1` FOREIGN KEY (`owner`) REFERENCES `users` (`id`),
-  ADD CONSTRAINT `entreprises_ibfk_2` FOREIGN KEY (`city`) REFERENCES `location` (`id`);
-
 
 --
 -- Insert moderator
 --
 
-INSERT INTO `users` (`id`, `name`, `surname`, `mail`, `password`, `isadmin`, `isseller`) VALUES
-(0, 'RooToto', 'RooToto', 'root@toto.roto', '$2y$10$.rZOpgUJL9wYICxLeGsIVOsniWrWijy246TJwXC.byrhbw0m9WHRu', 1, 0);
+INSERT INTO `users` (`name`, `surname`, `mail`, `password`, `isadmin`, `isseller`) VALUES
+('RooToto', 'RooToto', 'root@toto.roto', '$2y$10$.rZOpgUJL9wYICxLeGsIVOsniWrWijy246TJwXC.byrhbw0m9WHRu', 1, 0);
 
 
 --
