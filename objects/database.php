@@ -6,8 +6,8 @@ require_once 'city.php';
 class Database
 {
 	private static $dsn = 'mysql:dbname=php;host=127.0.0.1';
-	private static $dbUser = 'toto';
-	private static $dbPassword = 'Test123*';
+	private static $dbUser = '5WKRRSM8bzMJEkSKrqzVA6wt5se3vT';
+	private static $dbPassword = 'BGn7tapdsstqmhY7QtP8x3sxCDLkcm';
 	private $db;
 
 	public function __construct()
