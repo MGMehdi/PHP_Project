@@ -47,7 +47,7 @@ if (isset($_POST['adminCity'])) {
 }
 
 if (isset($_POST['Send'])) {
-	$to = "mgmehdi@tutanota.com";
+	#$to = ENTER A MAIL;
 	$subject = "Utilisateur : " . $_SESSION['id'] . " - " . utf8_decode($_POST['Subject']);
 	mail($to, $subject, utf8_decode($_POST['Message']));
 	header('Location: profil.php');
