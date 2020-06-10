@@ -32,7 +32,7 @@ Changer le chemin `sendmail_path` pour correspondre avec Xampp
 [mail function]
 SMTP=smtp.gmail.com
 smtp_port=587
-sendmail_from = i.am.jajino@gmail.com
+sendmail_from = MYMAIL
 sendmail_path = "\"E:\xampp\sendmail\sendmail.exe\" -t"
 ```
 
@@ -49,9 +49,9 @@ smtp_server=smtp.gmail.com
 smtp_port=587
 error_logfile=error.log
 debug_logfile=debug.log
-auth_username=i.am.jajino@gmail.com
-auth_password=dbyjdkvtiqyzqzyy
-force_sender=i.am.jajino@gmail.com
+auth_username=MYMAIL
+auth_password=APP_PASSWORD
+force_sender=MYMAIL
 ```
 
 ### Pour fini
